@@ -6,7 +6,7 @@ import sqlite3
 
 #CONST
 TOKEN  = '506889620:AAEu2LhOhwYf0jcLLPnX2v3t0p38679198o'
-DB_DIR = './../../db.sqlite3'
+DbDIR = './../../db.sqlite3'
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -15,7 +15,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 updater = Updater(token=TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
-conn = sqlite3.connect()
+conn = sqlite3.connect(DbDIR)
 cursor = conn.cursor()
 
 #Init work functions
@@ -25,8 +25,8 @@ def Start(update, context):
 def AddNumber(update, context):
     cursor.execute("INSERT INTO main_carnumbers VALUES \
         ((SELECT count(id) FROM main_carnumbers) + 1,\
-        '{0}','{1}','{2}','{3}')".format('null', 'null', str(context.args[0])'null'))
-    
+        '{0}','{1}','{2}','{3}')".format('null', 'null', str(context.args[0]),'null'))
+    conn.commit()
     print('write addnumber')
 
 def GetText(update, context):

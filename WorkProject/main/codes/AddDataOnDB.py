@@ -1,5 +1,5 @@
 import sqlite3 
-
+import os
 conn = sqlite3.connect("./../../db.sqlite3")
 cursor = conn.cursor()
 
