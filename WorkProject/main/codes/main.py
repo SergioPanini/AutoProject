@@ -21,9 +21,10 @@ def Start(update, context):
 
 def AddName(update, context):
     COMMAND = 'AddName'
+    print('write addname')
 
 def GetText(update, context):
-    pass
+    print('write text')
 
 #Set Handlers
 StartHandler = CommandHandler('start', Start)
