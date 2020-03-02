@@ -7,6 +7,8 @@ class CarNumbers(models.Model):
     Surname = models.CharField(max_length = 255)
     CarNumber = models.CharField(max_length = 9)
     Country = models.CharField(max_length = 3)
+    TelegramId = models.CharField(max_length = 20, default='')
+
 
 class Cards(models.Model):
     id_user = models.ForeignKey(CarNumbers, on_delete = models.CASCADE)
