@@ -2,6 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('ShowAllNumbers/', views.ShowAllNumbers),
-
+    path('', views.ShowMainPage),
+    path('AddUser/<str:Name>/<str:Surname>/<str:CarNumber>/<str:NameCarNumber>/<str:CallNumber>/<str:idTelegram>/<str:SecretToken>/', views.AddUser),
+    path('EditUserData/<str:idTelegram>/<str:Field>/<str:Value>/<str:SecretToken>/', views.EditUserData),
+#    path('EditCarNumberData/<str:idTelegram>/<str:Field>/<str:Value>/<str:SecretToken>/', views.EditCarNumberData)
 ]
+    
