@@ -8,6 +8,20 @@ SecretTokenApp = '1234'
 def ShowMainPage(request):
     return render(request, 'MainPage.html', context = {})
 
+def IsUser(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+                return HttpResponse(Users.objects.filter(idTelegram=request.GET['idtelegram']).exists())
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
+
+'''
 def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
     if SecretToken == SecretTokenApp:
         NewUser = Users(Name=Name, Surname=Surname,MobileNumber=CallNumber, idTelegram=idTelegram)
@@ -33,3 +47,4 @@ def EditUserData(request, idTelegram, Field, Value, SecretToken):
 #def ShowAllNumbers(request):
 #    CarNumbersAll = CarNumbers.objects.all()
 #    return render(request, 'index.html',context = {'ListUsers' : CarNumbersAll})
+'''
