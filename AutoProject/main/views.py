@@ -34,9 +34,26 @@ def AddUser(request):
     except: 
         return HttpResponse(' Errors in get parameters')
 
+
+def AddNumber(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+                Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
+                New_CarNumber = Numbers.objects.create(idUser=Select_User, NumberName=request.GET['numbername'], CarNumber=request.GET['carnumber'])
+                return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
+
 def test(request):
-    NewUser = Users.objects.create(Name=request.GET['name'], Surname=request.GET['surname'], idTelegram=request.GET['idtelegram'], MobileNumber=request.GET['mobilenumber'])
-                
+    Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
+    New_CarNumber = Numbers.objects.create(idUser=Select_User, NumberName=request.GET['numbername'], CarNumber=request.GET['carnumber'])
+                            
     return HttpResponse('true')
 '''
 def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
