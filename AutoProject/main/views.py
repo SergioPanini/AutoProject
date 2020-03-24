@@ -65,10 +65,25 @@ def AddParksIn(request):
         return HttpResponse(' Errors in get parameters')
 
 
+def AddParksOut(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+            Select_CarNumber = Numbers.objects.get(CarNumber=request.GET['carnumber'])
+            New_Parks = Parks.objects.filter(idNumber=Select_CarNumber).update(DateOutput=timezone.now())
+            return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
+
 def test(request):
     Select_CarNumber = Numbers.objects.get(CarNumber=request.GET['carnumber'])
-    New_Parks = Parks.objects.create(idNumber=Select_CarNumber, DateInput=timezone.now(), DateOutput='2000-01-01 00:00:00', Pay='False')
-                                    
+    New_Parks = Parks.objects.filter(idNumber=Select_CarNumber).update(DateOutput=timezone.now())
+                                            
     return HttpResponse('true')
 '''
 def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
