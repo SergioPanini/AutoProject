@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Users, Numbers, Parks, SecretTokens
+from django.utils import timezone
 # Create your views here.
 
 SecretTokenApp = '1234'
@@ -49,11 +50,25 @@ def AddNumber(request):
     except: 
         return HttpResponse(' Errors in get parameters')
 
+def AddParksIn(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+            Select_CarNumber = Numbers.objects.get(CarNumber=request.GET['carnumber'])
+            New_Parks = Parks.objects.create(idNumber=Select_CarNumber, DateInput=timezone.now(), DateOutput='2000-01-01 00:00:00', Pay='False')
+            return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
 
 def test(request):
-    Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
-    New_CarNumber = Numbers.objects.create(idUser=Select_User, NumberName=request.GET['numbername'], CarNumber=request.GET['carnumber'])
-                            
+    Select_CarNumber = Numbers.objects.get(CarNumber=request.GET['carnumber'])
+    New_Parks = Parks.objects.create(idNumber=Select_CarNumber, DateInput=timezone.now(), DateOutput='2000-01-01 00:00:00', Pay='False')
+                                    
     return HttpResponse('true')
 '''
 def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
