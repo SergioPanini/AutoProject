@@ -111,11 +111,26 @@ def EditPhone(request):
 
 
 
+def GetStatus(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+            Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
+            Select_CarNumbers = Numbers.objects.all(idUser=Select_User)
+            return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
+
 def test(request):
     Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
-    Select_User.Name = request.GET['newname']
-    Select_User.save()                                       
-    return HttpResponse('true')
+    Select_CarNumbers = Numbers.objects.filter(idUser=Select_User)
+    Select_Parks = Parks.objects.filter(idNumber__in=Select_CarNumbers).order_by('-DateInput').values()
+    return HttpResponse(Select_Parks)
 '''
 def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
     if SecretToken == SecretTokenApp:
