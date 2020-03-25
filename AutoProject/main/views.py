@@ -79,11 +79,42 @@ def AddParksOut(request):
     except: 
         return HttpResponse(' Errors in get parameters')
 
+def EditName(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+            Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
+            Select_User.Name = request.GET['newname']
+            Select_User.save()                                       
+            return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
+def EditPhone(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+            Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
+            Select_User.MobileNumber = request.GET['newphone']
+            Select_User.save()                                       
+            return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
+
 
 def test(request):
-    Select_CarNumber = Numbers.objects.get(CarNumber=request.GET['carnumber'])
-    New_Parks = Parks.objects.filter(idNumber=Select_CarNumber).update(DateOutput=timezone.now())
-                                            
+    Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
+    Select_User.Name = request.GET['newname']
+    Select_User.save()                                       
     return HttpResponse('true')
 '''
 def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
