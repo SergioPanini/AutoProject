@@ -116,8 +116,8 @@ def GetStatus(request):
 
         if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
             Data = {'CarName':'', 'CarNumber':'', 'OUT':'', 'DeltaTime':''}
-            Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
-            Select_CarNumbers = Numbers.objects.filter(idUser=Select_User)
+            Select_User = Users.objects.filter(idTelegram=request.GET['idtelegram'])
+            Select_CarNumbers = Numbers.objects.filter(idUser__in=Select_User)
             Select_Parks = Parks.objects.filter(idNumber__in=Select_CarNumbers).order_by('-DateInput')
     
             if Select_Parks.count() == 0:
@@ -145,10 +145,29 @@ def GetStatus(request):
 
 
 def test(request):
-    Select_User = Users.objects.get(idTelegram=request.GET['idtelegram'])
-    Select_CarNumbers = Numbers.objects.filter(idUser=Select_User)
-    Select_Parks = Parks.objects.filter(idNumber__in=Select_CarNumbers).order_by('-DateInput').values()
-    return HttpResponse(Select_Parks)
+    Data = {'CarName':'', 'CarNumber':'', 'OUT':'', 'DeltaTime':''}
+    Select_User = Users.objects.filter(idTelegram=request.GET['idtelegram'])
+    Select_CarNumbers = Numbers.objects.filter(idUser__in=Select_User)
+    Select_Parks = Parks.objects.filter(idNumber__in=Select_CarNumbers).order_by('-DateInput')
+    
+    if Select_Parks.count() == 0:
+        return HttpResponse('Parks is not')
+    else:
+        print('select_parks', Select_Parks[0])
+        print('select_number', Select_CarNumbers)
+                        
+        Data['DeltaTime'] = str(Select_Parks[0].DateOutput - Select_Parks[0].DateInput)
+        Data['CarName'] = Select_Parks[0].idNumber.NumberName
+        Data['CarNumber'] = Select_Parks[0].idNumber.CarNumber
+        print(Select_Parks[0].DateOutput)
+        if str(Select_Parks[0].DateOutput) == '2000-01-01 00:00:00+00:00':
+            Data['OUT'] = False
+    
+        else:
+            Data['OUT'] = True         
+            
+        return HttpResponse(str(Data))
+    
 '''
 def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
     if SecretToken == SecretTokenApp:
