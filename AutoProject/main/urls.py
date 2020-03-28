@@ -12,6 +12,7 @@ urlpatterns = [
     path('editname/', views.EditName),
     path('editphone/', views.EditPhone),
     path('parksin/', views.AddParksIn),
+    path('parksout/', views.AddParksOut),
     #path('editcarnumber/', views.EditCarNumber),
     path('getstatus/', views.GetStatus),
     path('test/', views.test),
