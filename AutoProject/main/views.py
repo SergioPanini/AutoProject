@@ -125,20 +125,21 @@ def GetStatus(request):
             else:
                 print('select_parks', Select_Parks[0])
                 print('select_number', Select_CarNumbers)
-                        
-                Data['DeltaTime'] = str(Select_Parks[0].DateOutput - Select_Parks[0].DateInput)
+                                
                 Data['CarName'] = Select_Parks[0].idNumber.NumberName
                 Data['CarNumber'] = Select_Parks[0].idNumber.CarNumber
-                print(Select_Parks[0].DateOutput)
+                print('outDate', Select_Parks[0].DateOutput)
                 if str(Select_Parks[0].DateOutput) == '2000-01-01 00:00:00+00:00':
                     Data['OUT'] = False
+                    Data['DeltaTime'] = str(timezone.now()- Select_Parks[0].DateInput)
+                
                 else:
-                    Data['OUT'] = True 
-            
-            
+                    Data['OUT'] = True         
+                    Data['DeltaTime'] = str(Select_Parks[0].DateOutput - Select_Parks[0].DateInput)
+                
                 return HttpResponse(str(Data))
         else:
-            return HttpResponse('Errors')
+           return HttpResponse('Errors')
     
     except: 
         return HttpResponse('Errors in get parameters')
@@ -156,16 +157,17 @@ def test(request):
         print('select_parks', Select_Parks[0])
         print('select_number', Select_CarNumbers)
                         
-        Data['DeltaTime'] = str(Select_Parks[0].DateOutput - Select_Parks[0].DateInput)
         Data['CarName'] = Select_Parks[0].idNumber.NumberName
         Data['CarNumber'] = Select_Parks[0].idNumber.CarNumber
-        print(Select_Parks[0].DateOutput)
+        print('outDate', Select_Parks[0].DateOutput)
         if str(Select_Parks[0].DateOutput) == '2000-01-01 00:00:00+00:00':
             Data['OUT'] = False
-    
+            Data['DeltaTime'] = str(timezone.now()- Select_Parks[0].DateInput)
+        
         else:
             Data['OUT'] = True         
-            
+            Data['DeltaTime'] = str(Select_Parks[0].DateOutput - Select_Parks[0].DateInput)
+        
         return HttpResponse(str(Data))
     
 '''
