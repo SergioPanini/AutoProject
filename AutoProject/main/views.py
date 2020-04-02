@@ -113,8 +113,9 @@ def EditCarNumber(request):
     try:
 
         if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
-            Number = Numbers.objects.filter(CarNumber=request.GET['number']).update(CarNumber = request.GET['newnumber'])
-                                    
+            User = Users.objects.filter(idTelegram=request.GET['idtelegram'])
+            Number = Numbers.objects.filter(idUser__in=User, CarNumber=request.GET['number']).update(CarNumber = request.GET['newnumber'])
+                            
             return HttpResponse('True')
         
         else:
@@ -160,6 +161,7 @@ def GetStatus(request):
 
 
 def test(request):
-    Number = Numbers.objects.filter(CarNumber=request.GET['number']).update(CarNumber = request.GET['newnumber'])
+    User = Users.objects.filter(idTelegram=request.GET['idtelegram'])
+    Number = Numbers.objects.filter(idUser__in=User, CarNumber=request.GET['number']).update(CarNumber = request.GET['newnumber'])
     
     return HttpResponse('true') 

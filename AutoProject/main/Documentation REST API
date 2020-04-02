@@ -87,6 +87,7 @@ HTTP Requests:
 
         This request add user in DB. You must select GET parameters.
         GET parameters:
+            -idtelegram - id Telegram user
             - number - Number car's user. 
             - newnumber - New number.
             - SecretToken - Token your app. You can get it on admin.
