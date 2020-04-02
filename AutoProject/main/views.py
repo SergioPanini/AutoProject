@@ -109,6 +109,20 @@ def EditPhone(request):
     except: 
         return HttpResponse(' Errors in get parameters')
 
+def EditCarNumber(request):
+    try:
+
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+            Number = Numbers.objects.filter(CarNumber=request.GET['number']).update(CarNumber = request.GET['newnumber'])
+                                    
+            return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
+
 
 
 def GetStatus(request):
@@ -146,54 +160,6 @@ def GetStatus(request):
 
 
 def test(request):
-    Data = {'CarName':'', 'CarNumber':'', 'OUT':'', 'DeltaTime':''}
-    Select_User = Users.objects.filter(idTelegram=request.GET['idtelegram'])
-    Select_CarNumbers = Numbers.objects.filter(idUser__in=Select_User)
-    Select_Parks = Parks.objects.filter(idNumber__in=Select_CarNumbers).order_by('-DateInput')
+    Number = Numbers.objects.filter(CarNumber=request.GET['number']).update(CarNumber = request.GET['newnumber'])
     
-    if Select_Parks.count() == 0:
-        return HttpResponse('Parks is not')
-    else:
-        print('select_parks', Select_Parks[0])
-        print('select_number', Select_CarNumbers)
-                        
-        Data['CarName'] = Select_Parks[0].idNumber.NumberName
-        Data['CarNumber'] = Select_Parks[0].idNumber.CarNumber
-        print('outDate', Select_Parks[0].DateOutput)
-        if str(Select_Parks[0].DateOutput) == '2000-01-01 00:00:00+00:00':
-            Data['OUT'] = False
-            Data['DeltaTime'] = str(timezone.now()- Select_Parks[0].DateInput)
-        
-        else:
-            Data['OUT'] = True         
-            Data['DeltaTime'] = str(Select_Parks[0].DateOutput - Select_Parks[0].DateInput)
-        
-        return HttpResponse(str(Data))
-    
-'''
-def AddUser(request, Name, Surname, CarNumber, NameCarNumber, CallNumber, idTelegram, SecretToken):
-    if SecretToken == SecretTokenApp:
-        NewUser = Users(Name=Name, Surname=Surname,MobileNumber=CallNumber, idTelegram=idTelegram)
-        NewUser.save()
-        NewUser.numbers_set.create(NumberName=NameCarNumber, CarNumber=CarNumber)
-        return HttpResponse('True')
-
-def EditUserData(request, idTelegram, Field, Value, SecretToken):
-    if SecretToken == SecretTokenApp:
-        SelectUser = Users.objects.get(idTelegram=idTelegram)
-       
-        if Field == 'Name':
-            SelectUser.Name = Value
-        elif Field == 'Surname':
-            SelectUser.Surname = Value
-        elif Field == 'MobileNumber':
-            SelectUser.MobileNumber = Value
-        else: return HttpResponse('Error, Field not found')
-
-        SelectUser.save()
-    return HttpResponse('edit data')
-
-#def ShowAllNumbers(request):
-#    CarNumbersAll = CarNumbers.objects.all()
-#    return render(request, 'index.html',context = {'ListUsers' : CarNumbersAll})
-'''
+    return HttpResponse('true') 

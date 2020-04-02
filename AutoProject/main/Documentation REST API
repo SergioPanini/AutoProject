@@ -32,7 +32,69 @@ HTTP Requests:
             - 'Errors in get parameters' - it mean that you make error in name get paraneters.    
             - 'Errors' - it mean that token is not correct.
             - 'True' - it mean that add complete.
+    
+    - http://host/addnumber/
+
+        This request add user in DB. You must select GET parameters.
+        GET parameters:
+            - idtelegram - Name Telegram user.
+            - name - Name user. 
+            - surname - Surname user.
+            - mobilenumber - Phone number user.
+            - SecretToken - Token your app. You can get it on admin.
+
+        Answers:
+            - 'Errors in get parameters' - it mean that you make error in name get paraneters.    
+            - 'Errors' - it mean that token is not correct.
+            - 'True' - it mean that add complete.
 
         Exemple:
             - http://127.0.0.1:8000/adduser/?SecretToken=1234&idtelegram=Serindgan&name=Vay&surname=petrov&mobilenumber=87777
 
+    - http://host/editname/
+
+        This request add user in DB. You must select GET parameters.
+        GET parameters:
+            - idtelegram - Name Telegram user.
+            - newname - new name user.
+            - SecretToken - Token your app. You can get it on admin.
+
+        Answers:
+            - 'Errors in get parameters' - it mean that you make error in name get paraneters.    
+            - 'Errors' - it mean that token is not correct.
+            - 'True' - it mean that add complete.
+
+        Exemple:
+            - http://127.0.0.1:8000/editname/?SecretToken=1234&idtelegram=Serindgan&newname=Vay
+
+    - http://host/editphone/
+
+        This request add user in DB. You must select GET parameters.
+        GET parameters:
+            - idtelegram - Name Telegram user.
+            - newphone - new phone.
+            - SecretToken - Token your app. You can get it on admin.
+
+        Answers:
+            - 'Errors in get parameters' - it mean that you make error in name get paraneters.    
+            - 'Errors' - it mean that token is not correct.
+            - 'True' - it mean that add complete.
+
+        Exemple:
+            - http://127.0.0.1:8000/editphone/?SecretToken=1234&idtelegram=Serindgan&newphone=7777
+
+- http://host/editcarnumber/
+
+        This request add user in DB. You must select GET parameters.
+        GET parameters:
+            - number - Number car's user. 
+            - newnumber - New number.
+            - SecretToken - Token your app. You can get it on admin.
+
+        Answers:
+            - 'Errors in get parameters' - it mean that you make error in name get paraneters.    
+            - 'Errors' - it mean that token is not correct.
+            - 'True' - it mean that add complete.
+
+        Exemple:
+            - http://127.0.0.1:8000/editcarnumber/?SecretToken=1234&number=666&newnumber=777
