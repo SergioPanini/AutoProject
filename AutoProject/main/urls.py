@@ -11,10 +11,13 @@ urlpatterns = [
 
     path('editname/', views.EditName),
     path('editphone/', views.EditPhone),
+    path('editcarnumber/', views.EditCarNumber),
+    path('editcarname/', views.EditCarName),
+
+    path('getstatus/', views.GetStatus),
     path('parksin/', views.AddParksIn),
     path('parksout/', views.AddParksOut),
-    path('editcarnumber/', views.EditCarNumber),
-    path('getstatus/', views.GetStatus),
+
     path('test/', views.test),
 ]
     

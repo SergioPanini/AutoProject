@@ -124,7 +124,20 @@ def EditCarNumber(request):
     except: 
         return HttpResponse(' Errors in get parameters')
 
+def EditCarName(request):
+    try:
 
+        if request.method == 'GET' and request.GET['SecretToken'] == SecretTokenApp:
+            User = Users.objects.filter(idTelegram=request.GET['idtelegram'])
+            Number = Numbers.objects.filter(idUser__in=User, CarNumber=request.GET['carnumber']).update(NumberName = request.GET['newname'])
+
+            return HttpResponse('True')
+        
+        else:
+            return HttpResponse('Errors')
+    
+    except: 
+        return HttpResponse(' Errors in get parameters')
 
 def GetStatus(request):
     try:
@@ -162,6 +175,6 @@ def GetStatus(request):
 
 def test(request):
     User = Users.objects.filter(idTelegram=request.GET['idtelegram'])
-    Number = Numbers.objects.filter(idUser__in=User, CarNumber=request.GET['number']).update(CarNumber = request.GET['newnumber'])
+    Number = Numbers.objects.filter(idUser__in=User, CarNumber=request.GET['carnumber']).update(NumberName = request.GET['newname'])
     
     return HttpResponse('true') 
